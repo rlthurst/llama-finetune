@@ -3,12 +3,12 @@ requires = ["hatchling", "hatch-requirements-txt"]
 build-backend = "hatchling.build"
 
 [project]
-name = "ai-clone-whatsapp"
+name = "llama-finetune"
 version = "0.0.1"
 authors = [
-  { name="David Hauser", email="hauser-david@hotmail.com" },
+  { name="Rudy Thurston", email="rudylthurston@gmail.com" },
 ]
-description = "This repository lets you create an AI chatbot clone of yourself, using your WhatsApp chats as training data."
+description = "This repository lets you create an chatbot clone of yourself, using your messages as training data."
 readme = "README.md"
 requires-python = ">=3.8"
 classifiers = [
@@ -23,9 +23,10 @@ vllm = ["vllm"]
 tests = ["pytest-mock"]
 auditnlg = ["auditnlg"]
 
+// TODO CHANGE HOLY SHIT
 [project.urls]
-"Homepage" = "https://github.com/kinggongzilla/ai-clone-whatsapp"
-"Bug Tracker" = "https://github.com/kinggongzilla/ai-clone-whatsapp"
+"Homepage" = "https://github.com/rlthurst/llama-finetune"
+"Bug Tracker" = "https://github.com/rlthurst/llama-finetune"
 
 [tool.hatch.build]
 exclude = [
