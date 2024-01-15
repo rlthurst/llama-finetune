@@ -23,7 +23,6 @@ vllm = ["vllm"]
 tests = ["pytest-mock"]
 auditnlg = ["auditnlg"]
 
-// TODO CHANGE HOLY SHIT
 [project.urls]
 "Homepage" = "https://github.com/rlthurst/llama-finetune"
 "Bug Tracker" = "https://github.com/rlthurst/llama-finetune"
