@@ -67,6 +67,9 @@ def main(**kwargs):
         torch.cuda.set_device(local_rank)
         clear_gpu_cache(local_rank)
         setup_environ_flags(rank)
+    else:
+        #clear gpu cache
+        torch.cuda.empty_cache()
 
     # Load the pre-trained model and setup its configuration
     use_cache = False if train_config.enable_fsdp else None
@@ -171,12 +174,13 @@ def main(**kwargs):
     if not train_config.enable_fsdp or rank == 0:
         print(f"--> Training Set Length = {len(dataset_train)}")
 
-    dataset_val = get_preprocessed_dataset(
-        tokenizer,
-        dataset_config,
-        split="test",
-    )
-    if not train_config.enable_fsdp or rank == 0:
+    if train_config.run_validation:
+        dataset_val = get_preprocessed_dataset(
+            tokenizer,
+            dataset_config,
+            split="test",
+        )
+        if not train_config.enable_fsdp or rank == 0:
             print(f"--> Validation Set Length = {len(dataset_val)}")
 
     if train_config.batching_strategy == "packing":
