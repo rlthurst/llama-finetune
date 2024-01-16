@@ -6,7 +6,10 @@
 import copy
 import datasets
 import itertools
+import sys
 
+# number of max recursions set to be larger than dataset size (necessary for the forward function)
+# sys.setrecursionlimit(50000)
 
 B_INST, E_INST = "[INST]", "[/INST]"
 
@@ -26,7 +29,9 @@ def tokenize_dialog(dialog, tokenizer):
 
 
 def get_custom_dataset(dataset_config, tokenizer, split):
-    dataset = datasets.load_dataset("OpenAssistant/oasst1", split=split)
+    # dataset = datasets.load_dataset("OpenAssistant/oasst1", split=split)
+    dataset = datasets.load_dataset('csv', data_dir=dataset_config.data_dir)
+    dataset = dataset[split]
 
     dataset = dataset.map(lambda sample: {
         "message_id": sample["message_id"],
@@ -72,11 +77,27 @@ def get_custom_dataset(dataset_config, tokenizer, split):
     def to_dialog(thread):
         dialog = []
         for i, content in enumerate(thread):
+            sender, text = extract_sender_and_text(content)
             dialog.append({
-                "role": "user" if i % 2 == 0 else "assistant",
-                "content": content,
+                # "role": "user" if i % 2 == 0 else "assistant",
+                "role": "assistant" if sender == dataset_config.assistant_key else "user",
+                # "content": content,
+                "content": text,
             })
         return {"dialog": dialog}
+    
+    def extract_sender_and_text(string):
+        start = string.find("<sender>")
+        end = string.find("</sender>")
+        
+        # Check if both tags are present
+        if start != -1 and end != -1:
+            sender = string[start + 8 : end]
+            text = string[end + 9 :]
+            return (sender, text)
+        else:
+            print('XXXXXXXXX', string)
+            return None
 
     dataset = dataset.map(lambda x: to_dialog(x["thread"]), remove_columns=list(dataset.features))
     dataset = dataset.map(lambda x: tokenize_dialog(x["dialog"], tokenizer), remove_columns=list(dataset.features))
