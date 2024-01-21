@@ -22,16 +22,16 @@ class train_config:
     weight_decay: float=0.0
     gamma: float= 0.85
     seed: int=42
-    use_fp16: bool=False #default True
+    use_fp16: bool=True
     mixed_precision: bool=True
     val_batch_size: int=1
     dataset = "custom_dataset"
     peft_method: str = "lora" # None , llama_adapter, prefix
-    use_peft: bool=False
+    use_peft: bool=True
     output_dir: str = "checkpoints"
     freeze_layers: bool = False
     num_freeze_layers: int = 1
-    quantization: bool = False
+    quantization: bool = True
     one_gpu: bool = False
     save_model: bool = True
     dist_checkpoint_root_folder: str="PATH/to/save/FSDP/model" # will be used if using FSDP
@@ -40,6 +40,6 @@ class train_config:
     use_fast_kernels: bool = False # Enable using SDPA from PyTroch Accelerated Transformers, make use Flash Attention and Xformer memory-efficient kernels
     save_metrics: bool = False # saves training metrics to a json file for later plotting
     # custom
-    assistant_key: str = "me" # Can change to a phonenumber or email to finetune on other people in your messages
+    assistant_key: str = "Me" # Can change to a phonenumber or email to finetune on other people in your messages
     data_dir: str = "data/preprocessing/processed_messages"
     file: str = "datasets/custom_dataset.py"
