@@ -9,7 +9,7 @@ import itertools
 import sys
 
 # number of max recursions set to be larger than dataset size (necessary for the forward function)
-# sys.setrecursionlimit(50000)
+sys.setrecursionlimit(100000)
 
 B_INST, E_INST = "[INST]", "[/INST]"
 
