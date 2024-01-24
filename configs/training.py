@@ -42,4 +42,3 @@ class train_config:
     # custom
     assistant_key: str = "Me" # Can change to a phonenumber or email to finetune on other people in your messages
     data_dir: str = "data/preprocessing/processed_messages"
-    file: str = "datasets/custom_dataset.py"
